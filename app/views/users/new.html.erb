@@ -1,0 +1,20 @@
+<h1>Sign up</h1>
+
+<%= render 'form', user: @user %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#user_profile_image').change(function(){
+			if(this.files[0].size > 50){
+				alert ("profile_image is more than 2 MB")
+			}
+		})
+
+		$('#user_cover_image').change(function(){
+			if(this.files[0].size > 50){
+				alert ("profile_image is more than 2 MB")
+			}
+		})
+	})
+</script>
+
