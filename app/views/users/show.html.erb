@@ -1,7 +1,84 @@
 <p id="notice"><%= notice %></p>
 <h1><%= @user.name %></h1>
-<%= image_tag @user.profile_image.url, style: 'height:3vw;width:5vw;'if @user.profile_image?%>
-<%= image_tag @user.cover_image.url, style: 'height:3vw;width:5vw;'if @user.cover_image?%>
+<hr>
+<table>
+	<tr>
+		<td><%= image_tag @user.profile_image.url, style: 'height:3vw;width:5vw;'if @user.profile_image?%> </td>
+		<td><%= image_tag @user.cover_image.url, style: 'height:3vw;width:5vw;'if @user.cover_image?%></td>
+	</tr>
+</table>
+<hr>
+<h3>new micropost</h3>
+<%= form_for(@micropost) do |micropost| %>
+	<div>
+		<%= micropost.label :content %>
+		<%= micropost.text_field :content %>
+	</div>
+	<div>
+		<%= micropost.file_field :micropost_image %>
+	</div>
+	<%= micropost.submit %>
+<% end %>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
+<h2>Microposts</h2>
+<hr>
+<% @microposts.each do |micropost| %>
+	<table>
+		<tr>
+			<td><%= micropost.created_at.strftime '%d/%m/%Y' %></td>
+			<td>
+				<table>
+					<tr>
+						<td>
+							<table>
+								<tr>
+									<td><%= image_tag micropost.user.profile_image.url, style: 'height:1.5vw;width:3vw;' if  micropost.user.profile_image?%>
+									</td>
+									<td>
+										<p style="font-weight: bold;">
+											<%= micropost.user.name %>		
+										</p>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>	
+						<td>
+							<%= image_tag micropost.micropost_image.url, style: 'height:1.5vw;width:3vw;' if  micropost.micropost_image?%>
+						</td>
+						<td>
+							<p style="border-width: 1px;border-style: solid;">
+								<%= micropost.content %>
+							</p>
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td>
+				<% if current_user.is_admin? %> 
+					<%= link_to 'delete-post', micropost_path(micropost.id), method: "delete"%>
+				<% else %>
+					<% if micropost.user.id == current_user.id %>
+						<%= link_to 'delete-post', micropost_path(micropost.id), method: "delete"%>
+					<% end %>
+				<% end %>
+			</td>
+		</tr>
+	</table>
+	<hr>
+<% end %>
+
+<%= link_to 'Edit', edit_user_path(@user) %>
 <%= link_to 'Back', users_path %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#micropost_image').change(function(){
+			if(this.files[0].size > 1048576){
+				alert ("micropost_image is more than 1 MB")
+			}
+		})
+	})
+</script>
+

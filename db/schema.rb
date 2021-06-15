@@ -10,17 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_14_124610) do
+ActiveRecord::Schema.define(version: 2021_06_15_125225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "microposts", force: :cascade do |t|
     t.string "content"
-    t.bigint "users_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["users_id"], name: "index_microposts_on_users_id"
+    t.string "micropost_image"
+    t.index ["user_id"], name: "index_microposts_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -33,10 +34,11 @@ ActiveRecord::Schema.define(version: 2021_06_14_124610) do
     t.string "profile_image"
     t.string "cover_image"
     t.string "password_digest"
-    t.boolean "admin"
-    t.boolean "activate"
+    t.boolean "is_admin"
+    t.boolean "is_activated", default: false
+    t.boolean "is_rejected", default: true
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "microposts", "users", column: "users_id"
+  add_foreign_key "microposts", "users"
 end

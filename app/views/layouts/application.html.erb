@@ -13,6 +13,10 @@
     <% flash.each do |key, value| %>
       <%= "#{key}: #{value}." %>
     <% end %>
+    <%= render 'layouts/header' %>
+    <hr>
     <%= yield %>
+    <hr>
+    <%= render 'layouts/footer' %>
   </body>
 </html>

@@ -5,13 +5,13 @@
 <script>
 	$(document).ready(function(){
 		$('#user_profile_image').change(function(){
-			if(this.files[0].size > 50){
+			if(this.files[0].size > 2097152){
 				alert ("profile_image is more than 2 MB")
 			}
 		})
 
 		$('#user_cover_image').change(function(){
-			if(this.files[0].size > 50){
+			if(this.files[0].size > 2097152){
 				alert ("profile_image is more than 2 MB")
 			}
 		})

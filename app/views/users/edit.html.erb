@@ -3,3 +3,20 @@
 <%= render 'form', user: @user %>
 
 <%= link_to 'Show', @user %> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#user_profile_image').change(function(){
+			if(this.files[0].size > 2097152){
+				alert ("profile_image is more than 2 MB")
+			}
+		})
+
+		$('#user_cover_image').change(function(){
+			if(this.files[0].size > 2097152){
+				alert ("profile_image is more than 2 MB")
+			}
+		})
+	})
+</script>
+
