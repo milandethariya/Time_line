@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'likes/show'
+  post 'likes/create'
+  delete 'likes/destroy'
 	resources :microposts, only: [:create, :destroy]
   resources :activation, only: [:new, :update]
  	patch 'reject' => 'activation#reject'
