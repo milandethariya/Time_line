@@ -1,0 +1,40 @@
+<h1>User's Activation List</h1>
+<table>
+	<td><%= link_to "Activated List", activation_approvelist_path %></td>
+	<td><%= link_to "Reject List", activation_rejectlist_path %></td>
+</table>
+<% if @users.present? %>
+	<table>
+		<tr>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Profile picture</th>
+			<th>D.O.B</th>
+			<th>Activation</th>
+			<th>Rejection</th>
+		</tr>
+		<% @users.each do |user| %>
+			<tr>
+				<td><%= user.name %></td>
+				<td><%= user.email %></td>
+				<td><%= image_tag user.profile_image.url, style: 'height:3vw;width:5vw;'if user.profile_image?%></td>
+				<td><%= user.birthdate %></td>
+				<% if user.is_admin == true %> 
+					<td>Admin</td>
+				<% else %>
+					<% if user.is_activated == false %>
+						<td><%= link_to "Approve", approve_path(id: user.id), method: "patch" %></td>
+					<% else %> 
+						<td>Activate</td>
+					<% end %>
+				<% end %>
+				<% if user.is_admin == true %> 
+					<td>Admin</td>
+				<% else %>
+					<td><%= link_to "Reject", reject_path(id: user.id), method: "patch" %></td>
+				<% end %>
+			</tr>
+		<% end %>
+	</table>
+<% end %>
+

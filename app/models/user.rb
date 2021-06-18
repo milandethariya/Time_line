@@ -1,7 +1,9 @@
 class User < ApplicationRecord
 	has_many :microposts, dependent: :destroy
-	has_many :likes, dependent: :destroy
-	has_many :microposts, through: :likes
+	has_many :likes
+	has_many :comments
+	has_many :senders, class_name: "Friendship", foreign_key: "sender_id" , dependent: :destroy
+	has_many :receivers, class_name: "Friendship", foreign_key: "receiver_id" , dependent: :destroy
 	validates :name, presence: true, length: {maximum: 50}
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 	validates :email, presence: true, format: {with: VALID_EMAIL_REGEX },uniqueness: { case_sensitive: false }
@@ -27,8 +29,8 @@ class User < ApplicationRecord
 		end
 	end
 
-	def is_like?(user)
-  	users.include?(user)
+  def is_like?
+    likes.where(user_id: current_user.id).count == "1"
   end
 
 end

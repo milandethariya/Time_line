@@ -1,0 +1,23 @@
+<h1>Comments By</h1>
+<% if @comments.present? %>
+	<table>
+		<tr>
+			<th>Profile</th>
+			<th>Name</th>
+			<th>Comment</th>
+			<th>Delete</th>
+		</tr>
+		<% @comments.each do |comment| %>
+		<tr>
+			<td><%= image_tag comment.user.profile_image.url, style: 'height:1.5vw;width:3vw;' if  comment.user.profile_image?%> </td>
+			<td><%= comment.user.name %></td>
+			<td><%= comment.comment %></td>
+			<% if current_user.is_admin? %>
+				<td><%= link_to "Delete", comments_destroy_micropost_path(id: comment.id),method: 'delete', data: { confirm: "Are you sure you want to delete the comment?"}%></td>
+			<% elsif comment.user == current_user %>
+				<td><%= link_to "Delete", comments_destroy_micropost_path(id: comment.id),method: 'delete',data: { confirm: "Are you sure you want to delete the comment?"}%></td>
+			<% end %>
+		</tr>
+		<% end %>
+	</table>
+<% end %>

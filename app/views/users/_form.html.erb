@@ -24,7 +24,8 @@
 
   <div class="field">
     <%= form.label :birthdate %>
-    <%= form.date_select :birthdate, {order: [:day, :month, :year]}%>
+    <%= form.date_select :birthdate, {:start_year => Time.zone.now.year, :end_year => Time.zone.now.year - 100, order: [:day, :month, :year]} %>
+    <%#= form.date_select :birthdate, {order: [:day, :month, :year]} %>
   </div>
 
   <div class="field">    
@@ -34,10 +35,12 @@
   </div>
 
   <div class="field">
+     <%= image_tag user.profile_image.url, style: 'height:3vw;width:5vw;'if user.profile_image?%> </td>
     <%= form.label :profile_image %>
     <%= form.file_field :profile_image %>
   </div>
-
+  
+  <%= image_tag user.cover_image.url, style: 'height:3vw;width:5vw;'if user.cover_image?%> </td>
   <div class="field">
     <%= form.label :cover_image %>
     <%= form.file_field :cover_image %>

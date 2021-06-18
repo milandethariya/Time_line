@@ -1,7 +1,7 @@
 class Micropost < ApplicationRecord
   belongs_to :user
   has_many :likes, dependent: :destroy
-  has_many :users, through: :likes
+  has_many :comments, dependent: :destroy
   default_scope -> { order(created_at: :desc) }
   validates :content, presence: true,length: {maximum: 140}
   mount_uploader :micropost_image, ProfileImageUploader
@@ -13,7 +13,4 @@ class Micropost < ApplicationRecord
     end
   end
 
-  def is_like?(user)
-    users.include?(user)
-  end
 end

@@ -1,0 +1,15 @@
+<h1>Friends</h1>
+<% if @friends.present? %>
+  <table>
+    <tr>
+      <th>Profile</th>
+      <th>Name</th>
+    </tr>
+    <% @friends.each do |friend| %>
+      <tr>
+        <td><%= image_tag friend.profile_image.url, style: 'height:3vw;width:5vw;'if friend.profile_image?%></td>
+        <td><%= friend.name %></td>
+      <tr>
+    <% end %>
+  </table>
+<% end %>

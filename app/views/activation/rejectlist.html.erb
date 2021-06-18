@@ -1,0 +1,19 @@
+<h1>Reject List </h1>
+<% if @users.present? %>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Profile picture</th>
+      <th>D.O.B</th>
+    </tr>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= image_tag user.profile_image.url, style: 'height:3vw;width:5vw;'if user.profile_image?%></td>
+        <td><%= user.birthdate %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

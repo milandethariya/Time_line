@@ -1,0 +1,111 @@
+<h3>New Micropost</h3>
+<%= form_for(@micropost) do |micropost| %>
+  <div>
+    <%= micropost.label :content %>
+    <%= micropost.text_field :content %>
+  </div>
+  <div>
+    <%= micropost.file_field :micropost_image %>
+  </div>
+  <%= micropost.submit %>
+<% end %>
+
+<h2>Microposts</h2>
+
+<% @microposts.each do |micropost| %>
+<hr>
+  <table>
+    <tr>
+      <td><%= micropost.created_at.strftime '%d/%m/%Y' %></td>
+      <td>
+        <table>
+          <tr>
+            <td>
+              <table>
+                <tr>
+                  <td><%= image_tag micropost.user.profile_image.url, style: 'height:1.5vw;width:3vw;' if  micropost.user.profile_image?%>
+                  </td>
+                  <td>
+                    <p style="font-weight: bold;">
+                      <%= micropost.user.name %>    
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>  
+            <td>
+              <%= image_tag micropost.micropost_image.url, style: 'height:1.5vw;width:3vw;' if  micropost.micropost_image?%>
+            </td>
+            <td>
+              <p style="border-width: 1px;border-style: solid;">
+                <%= micropost.content %>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <table>
+                <td>
+                  <% unless micropost.likes.where(user_id: current_user.id, is_like: true).count == 1 %>
+                    <%= form_for(current_user.likes.build,url: likes_like_micropost_path, method: 'patch')  do |f| %>
+                    <div><%= hidden_field_tag :micropost_id, micropost.id %></div>
+                    <%= f.submit "Like", class: "btn btn-primary" %>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td>
+                  <% unless micropost.likes.where(user_id: current_user.id, is_like: false).count == 1 %>
+                    <%= form_with url:likes_unlike_micropost_path, method: 'patch' do |f| %>
+                    <div><%= hidden_field_tag :micropost_id, micropost.id %></div>
+                    <%= f.submit "Unlike", class: "btn" %>
+                    <% end %>
+                  <% end %>
+                </td>
+            </table>
+            </td>
+            <td>
+              <%= form_for @comment,method: 'post', url:comments_create_micropost_path do |comment| %>
+                <div><%= hidden_field_tag :micropost_id, micropost.id %></div>
+                <div>
+                  <%= comment.label :comment %>
+                  <%= comment.text_field :comment %>
+                </div>
+                <%= comment.submit %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <table>
+                <td><%= link_to "#{pluralize(micropost.likes.where(is_like: true).count,'Like')}", likes_likeshow_micropost_path(id: micropost.id) %></td>
+                <td><%= link_to "#{pluralize(micropost.likes.where(is_like: false).count,'Unlike')}", likes_unlikeshow_micropost_path(id: micropost.id) %></td>
+              </table>
+            </td>
+            <td><%= link_to "#{pluralize(micropost.comments.count,'Comment')}", comments_show_micropost_path(id: micropost.id) %></td>
+          </tr>
+        </table>
+      </td>
+      <td>
+        <% if current_user.is_admin? %> 
+          <%= link_to 'Delete Post', micropost_path(micropost.id), method: "delete", data:{ confirm: "Are you sure you want to delete the micropost?"}%>
+        <% else %>
+          <% if micropost.user.id == current_user.id %>
+            <%= link_to 'Delete Post', micropost_path(micropost.id), method: "delete", data:{ confirm: "Are you sure you want to delete the micropost?"}%>
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+<% end %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $('#micropost_image').change(function(){
+      if(this.files[0].size > 1048576){
+        alert ("micropost_image is more than 1 MB")
+      }
+    })
+  })
+</script>
