@@ -1,33 +1,78 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-	<div class="container">
-		<%= link_to "Time line", "#", id: "logo" %>
-		<nav>
-			<ul>
-				<% if logged_in? %>
-          <li><%= link_to "Users", users_path %></li>
-          <li><%= link_to "Friends", friendship_path(current_user) %></li>
-       		<li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            Account <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <div class=" col-md-9 d-flex flex-grow-1">
+      <span class="w-100 d-sm-none d-block"><!-- hidden spacer to center brand on mobile --></span>
+      <a class="navbar-brand d-inline-block" href="#">
+        <%= image_tag("logo.jpg", :alt => "logo", size: '50') %>
+        time Line
+      </a>
+      <div class="w-100 text-right">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+      </div>
+  </div>
+  <div class="collapse navbar-collapse flex-grow-1 " id="myNavbar">
+      <ul class="navbar-nav ml-auto flex-nowrap ">
+        <% if logged_in? %>
+          <li class="nav-item">
+            <%= link_to "Users", users_path, :class=> "nav-link m-2 menu-item"%>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Friends", friendship_path(current_user), :class=> "nav-link m-2 menu-item" %>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle nav-link m-2 menu-item"  data-toggle="dropdown" role="button" aria-expanded="false">Account<span class="caret"  ></span></a>
+            <ul class="dropdown-menu" role="menu">
               <% if current_user.is_admin?%>
-                <li><%= link_to "User's Activatation List", activation_index_path %></li>
+                <li><%= link_to "User's Activatation List", activation_index_path, :class=> "list-group-item"%></li>
               <% end %>
-              <li><%= link_to "Friend Requests", receive_friendship_path(current_user) %></li>
-              <li><%= link_to "Profile", current_user %></li>
-              <li><%= link_to "Edit Profile", edit_user_path(current_user) %></li>
-              <li><%= link_to "Time Line", timeline_user_path(current_user)%>
-              <li>
-              <%= link_to "Log out", sessions_destroy_path , method: "delete" %>
-              </li>
+              <li><%= link_to "Friend Requests", receive_friendship_path(current_user), :class=> "list-group-item" %></li>
+              <li><%= link_to "Profile", current_user, :class=> "list-group-item" %></li>
+              <li><%= link_to "Edit Profile", edit_user_path(current_user), :class=> "list-group-item" %></li>
+              <li><%= link_to "Time Line", timeline_user_path(current_user), :class=> "list-group-item"%>
+              <li><%= link_to "Log out", sessions_destroy_path , method: "delete", :class=> "list-group-item" %></li>
             </ul>
           </li>
         <% else %>
-          <li><%= link_to "Log in", root_path %></li>
-          <li><%= link_to "Sign up", new_user_path %></li>
+          <li class="nav-item">
+              <%= link_to "Log in", root_path, :class=> "nav-link m-2 menu-item" %>
+          </li>
+          <li class="nav-item">
+              <%= link_to "Sign up", new_user_path, :class=> "nav-link m-2 menu-item"  %>
+          </li>
         <% end %>
-			</ul>
-		</nav>
-</div>
-</header>
+      </ul>
+  </div>
+</nav>
+
+	<%#= link_to "Time line", "#", id: "logo" %>
+	<!--<nav>
+		<ul>
+			<% #if logged_in? %>
+        <li><%#= link_to "Users", users_path %></li>
+        <li><%#= link_to "Friends", friendship_path(current_user) %></li>
+     		<li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          Account <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <% #if current_user.is_admin?%>
+              <li><%#= link_to "User's Activatation List", activation_index_path %></li>
+            <% #end %>
+            <li><%#= link_to "Friend Requests", receive_friendship_path(current_user) %></li>
+            <li><%#= link_to "Profile", current_user %></li>
+            <li><%#= link_to "Edit Profile", edit_user_path(current_user) %></li>
+            <li><%#= link_to "Time Line", timeline_user_path(current_user)%>
+            <li>
+            <%#= link_to "Log out", sessions_destroy_path , method: "delete" %>
+            </li>
+          </ul>
+        </li>
+      <% #else %>
+        <li><%#= link_to "Log in", root_path %></li>
+        <li><%#= link_to "Sign up", new_user_path %></li>
+      <% #end %>
+		</ul>
+	</nav>
+</header>-->

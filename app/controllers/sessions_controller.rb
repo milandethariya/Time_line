@@ -33,6 +33,8 @@ class SessionsController < ApplicationController
     redirect_to root_path
   end
 
+
+
   private
     def logged
       if !current_user.nil?

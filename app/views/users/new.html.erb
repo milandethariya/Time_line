@@ -1,6 +1,8 @@
-<h1>Sign up</h1>
-
-<%= render 'form', user: @user %>
+<% content_for :title, 'Sign Up' %>
+<div class="formStyle">
+	<h1 class="row justify-content-center">Sign up</h1>
+	<%= render 'form', user: @user %>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
