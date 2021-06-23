@@ -7,7 +7,16 @@ class MicropostsController < ApplicationController
     else
       flash[:danger] = 'micropost have 1 to 140 characters!'
     end
-    redirect_to timeline_user_path(current_user)
+    respond_to do |format|
+      format.html{redirect_to timeline_user_path(current_user)}
+      format.js{
+        friends =  current_user.senders.where(status: "accept").pluck(:receiver_id)
+        friends += current_user.receivers.where(status: "accept").pluck(:sender_id)
+        friends.push(current_user.id)
+        @microposts = Micropost.where(user_id: friends)
+        @comment = Comment.new
+      }
+    end
     #redirect_to request.referrer
   end
 
@@ -15,7 +24,16 @@ class MicropostsController < ApplicationController
     @micropost = current_user.microposts.find_by(id: params[:id])
     @micropost.destroy
     flash[:success] = "Micropost deleted!"
-    redirect_to timeline_user_path(current_user) 
+    respond_to do |format|
+    format.html{redirect_to timeline_user_path(current_user)}
+    format.js{
+      friends =  current_user.senders.where(status: "accept").pluck(:receiver_id)
+      friends += current_user.receivers.where(status: "accept").pluck(:sender_id)
+      friends.push(current_user.id)
+      @microposts = Micropost.where(user_id: friends)
+      @comment = Comment.new
+    }
+    end 
   end
 
   private

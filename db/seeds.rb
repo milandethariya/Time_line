@@ -5,3 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+@user = User.create(email: "admin@gmail.com", name: "Admin",password: "admin123",is_admin: true,gender: "male", birthdate: "19/12/1997" )
+puts @user.inspect

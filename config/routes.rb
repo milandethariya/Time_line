@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       get 'receive'
     end
   end
-	resources :microposts, only: [:create, :destroy]
+	#resources :microposts, only: [:create, :destroy]
   resources :activation, only: [:index]
   patch 'approve' => 'activation#approve'
  	patch 'reject' => 'activation#reject'
@@ -16,7 +16,7 @@ Rails.application.routes.draw do
  	root 'sessions#new'
   post 'sessions/create'
   delete 'sessions/destroy'
-  resources :users, only:[:new,:index, :create, :show, :edit, :update, :destroy]
+  #resources :users, only:[:new,:index, :create, :show, :edit, :update, :destroy]
   resources :users do
     member do
       get 'timeline' => 'users#timeline'
