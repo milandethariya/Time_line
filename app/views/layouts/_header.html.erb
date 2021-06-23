@@ -1,6 +1,6 @@
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
-  <div class=" col-md-9 d-flex flex-grow-1">
+  <div class=" col-md-8 d-flex flex-grow-1">
       <span class="w-100 d-sm-none d-block"><!-- hidden spacer to center brand on mobile --></span>
       <a class="navbar-brand d-inline-block" href="#">
         <%= image_tag("logo.jpg", :alt => "logo", size: '50') %>
@@ -13,35 +13,26 @@
       </div>
   </div>
   <div class="collapse navbar-collapse flex-grow-1 " id="myNavbar">
-      <ul class="navbar-nav ml-auto flex-nowrap ">
-        <% if logged_in? %>
-          <li class="nav-item">
-            <%= link_to "Users", users_path, :class=> "nav-link m-2 menu-item"%>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Friends", friendship_path(current_user), :class=> "nav-link m-2 menu-item" %>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle nav-link m-2 menu-item"  data-toggle="dropdown" role="button" aria-expanded="false">Account<span class="caret"  ></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <% if current_user.is_admin?%>
-                <li><%= link_to "User's Activatation List", activation_index_path, :class=> "list-group-item"%></li>
-              <% end %>
-              <li><%= link_to "Friend Requests", receive_friendship_path(current_user), :class=> "list-group-item" %></li>
-              <li><%= link_to "Profile", current_user, :class=> "list-group-item" %></li>
-              <li><%= link_to "Edit Profile", edit_user_path(current_user), :class=> "list-group-item" %></li>
-              <li><%= link_to "Time Line", timeline_user_path(current_user), :class=> "list-group-item"%>
-              <li><%= link_to "Log out", sessions_destroy_path , method: "delete", :class=> "list-group-item" %></li>
-            </ul>
-          </li>
-        <% else %>
-          <li class="nav-item">
-              <%= link_to "Log in", root_path, :class=> "nav-link m-2 menu-item" %>
-          </li>
-          <li class="nav-item">
-              <%= link_to "Sign up", new_user_path, :class=> "nav-link m-2 menu-item"  %>
-          </li>
-        <% end %>
+      <ul class="navbar-nav ml-auto flex-nowrap "> 
+        <li class="nav-item">
+          <%= link_to "Users", users_path, :class=> "nav-link m-2 menu-item"%>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Friends", friendship_path(current_user), :class=> "nav-link m-2 menu-item" %>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle nav-link m-2 menu-item"  data-toggle="dropdown" role="button" aria-expanded="false">Account<span class="caret"  ></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <% if current_user.is_admin?%>
+              <li><%= link_to "User's Activatation List", activation_index_path, :class=> "list-group-item"%></li>
+            <% end %>
+            <li><%= link_to "Friend Requests", receive_friendship_path(current_user), :class=> "list-group-item" %></li>
+            <li><%= link_to "Profile", current_user, :class=> "list-group-item" %></li>
+            <li><%= link_to "Edit Profile", edit_user_path(current_user), :class=> "list-group-item" %></li>
+            <li><%= link_to "Time Line", timeline_user_path(current_user), :class=> "list-group-item"%>
+            <li><%= link_to "Log out", sessions_destroy_path , method: "delete", :class=> "list-group-item" %></li>
+          </ul>
+        </li>
       </ul>
   </div>
 </nav>

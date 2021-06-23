@@ -20,11 +20,11 @@
       <% flash.each do |key, value| %>
         <%= "#{key}: #{value}." %>
       <% end %>
-      <%= render 'layouts/header' %>
+      <% if logged_in? %>
+        <%= render 'layouts/header' %>
+      <% end %>
       <div class="container fill">
-        <div class="row">
-          <%= yield %>
-        </div>
+        <%= yield %>
       </div>
       <%= render 'layouts/footer' %>
   </body>

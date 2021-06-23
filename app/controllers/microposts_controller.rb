@@ -15,6 +15,7 @@ class MicropostsController < ApplicationController
         friends.push(current_user.id)
         @microposts = Micropost.where(user_id: friends)
         @comment = Comment.new
+        @micropost = Micropost.new
       }
     end
     #redirect_to request.referrer

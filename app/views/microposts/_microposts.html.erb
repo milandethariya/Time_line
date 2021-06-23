@@ -1,87 +1,80 @@
 <% @microposts.each do |micropost| %>
-  <hr>
-    <table>
-      <tr>
-        <td><%= micropost.created_at.strftime '%d/%m/%Y' %></td>
-        <td>
-          <table>
-            <tr>
-              <td>
-                <table>
-                  <tr>
-                    <td><%= image_tag micropost.user.profile_image.url, style: 'height:1.5vw;width:3vw;' if  micropost.user.profile_image?%>
-                    </td>
-                    <td>
-                      <p style="font-weight: bold;">
-                        <%= micropost.user.name %>    
-                      </p>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>  
-              <td>
-                <%= image_tag micropost.micropost_image.url, style: 'height:1.5vw;width:3vw;' if  micropost.micropost_image?%>
-              </td>
-              <td>
-                <p style="border-width: 1px;border-style: solid;">
-                  <%= micropost.content %>
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <table>
-                  <td>
-                    <% unless micropost.likes.where(user_id: current_user.id, is_like: true).count == 1 %>
-                      <%= form_for(current_user.likes.build,url: likes_like_micropost_path(micropost), method: 'patch')  do |f| %>
-                      <div><%= hidden_field_tag :micropost_id, micropost.id %></div>
-                      <%= f.submit "Like", class: "btn btn-primary" %>
-                      <% end %>
-                    <% end %>
-                  </td>
-                  <td>
-                    <% unless micropost.likes.where(user_id: current_user.id, is_like: false).count == 1 %>
-                      <%= form_with url:likes_unlike_micropost_path(micropost), method: 'patch' do |f| %>
-                      <div><%= hidden_field_tag :micropost_id, micropost.id %></div>
-                      <%= f.submit "Unlike", class: "btn" %>
-                      <% end %>
-                    <% end %>
-                  </td>
-              </table>
-              </td>
-              <td>
-                <%= form_for @comment,method: 'post', url:comments_create_micropost_path(micropost) do |comment| %>
-                  <div><%= hidden_field_tag :micropost_id, micropost.id %></div>
-                  <div>
-                    <%= comment.label :comment %>
-                    <%= comment.text_field :comment %>
-                  </div>
-                  <%= comment.submit %>
-                <% end %>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <table>
-                  <td><%= link_to "#{pluralize(micropost.likes.where(is_like: true).count,'Like')}", likes_likeshow_micropost_path(id: micropost.id) %></td>
-                  <td><%= link_to "#{pluralize(micropost.likes.where(is_like: false).count,'Unlike')}", likes_unlikeshow_micropost_path(id: micropost.id) %></td>
-                </table>
-              </td>
-              <td><%= link_to "#{pluralize(micropost.comments.count,'Comment')}", comments_show_micropost_path(id: micropost.id) %></td>
-            </tr>
-          </table>
-        </td>
-        <td>
-          <% if current_user.is_admin? %> 
-            <%= link_to 'Delete Post', micropost_path(micropost.id), method: "delete",remote: true, data:{ confirm: "Are you sure you want to delete the micropost?"}%>
-          <% else %>
-            <% if micropost.user.id == current_user.id %>
-              <%= link_to 'Delete Post', micropost_path(micropost.id), method: "delete",remote: true, data:{ confirm: "Are you sure you want to delete the micropost?"}%>
+  <div class="row">
+    <div class="row">
+      <div class="col-md-2">
+        <%= image_tag micropost.user.profile_image.url, style: 'height:3vw;width:3vw;',class: "rounded-circle" if  micropost.user.profile_image?%>
+      </div>
+      <div class="col-md-8">
+        <div class="row ">
+          <span style="font-weight: bold;"><%= micropost.user.name %></span><small style="font-style: italic;"class="font-italic"><%= distance_of_time_in_words(Time.now, micropost.created_at)%> ago</small>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <% if current_user.is_admin? %> 
+          <%= link_to 'Delete', micropost_path(micropost.id), method: "delete",remote: true,class: "text-decoration-none", data:{ confirm: "Are you sure you want to delete the micropost?"}%>
+        <% else %>
+          <% if micropost.user.id == current_user.id %>
+            <%= link_to 'Delete', micropost_path(micropost.id), method: "delete",remote: true,class: "text-decoration-none", data:{ confirm: "Are you sure you want to delete the micropost?"}%>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col ml-3">
+        <%= micropost.content%>
+      </div>
+    </div>
+    <div class="row d-block mx-auto rounded">
+      <%= image_tag micropost.micropost_image.url,style:'height:20vw;width:35vw;' if  micropost.micropost_image?%>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-4">
+        <div class="row">
+          <%= link_to "#{pluralize(micropost.likes.where(is_like: true).count,'Like')}", likes_likeshow_micropost_path(id: micropost.id),class: "text-decoration-none" %>
+        </div>
+        <div class="row">
+          <% unless micropost.likes.where(user_id: current_user.id, is_like: true).count == 1 %>
+            <%= form_for(current_user.likes.build,url: likes_like_micropost_path(micropost), method: 'patch')  do |f| %>
+            <div><%= hidden_field_tag :micropost_id, micropost.id %></div>
+            <%= f.submit "Like", class: "btn btn-primary btn-sm" %>
             <% end %>
           <% end %>
-        </td>
-      </tr>
-    </table>
-  <% end %>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <%= link_to "#{pluralize(micropost.likes.where(is_like: false).count,'Unlike')}", likes_unlikeshow_micropost_path(id: micropost.id),class: "text-decoration-none" %>
+        </div>
+        <div class="row">
+          <% unless micropost.likes.where(user_id: current_user.id, is_like: false).count == 1 %>
+            <%= form_with url:likes_unlike_micropost_path(micropost), method: 'patch' do |f| %>
+            <div><%= hidden_field_tag :micropost_id, micropost.id %></div>
+            <%= f.submit "Unlike", class: "btn btn-primary btn-sm" %>
+            <% end %>
+          <% end %>
+
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <%= link_to "#{pluralize(micropost.comments.count,'Comment')}", comments_show_micropost_path(id: micropost.id), class: "text-decoration-none" %>
+        </div>
+      </div>
+    </div>
+      <%= form_for @comment,method: 'post', url:comments_create_micropost_path(micropost) do |comment| %>
+        <div><%= hidden_field_tag :micropost_id, micropost.id %></div>
+        <div class="row mt-2 mb-2">
+          <div class="col-sm-3">
+            <%= comment.label :comment %> 
+          </div>
+          <div class="col-sm-6">
+            <%= comment.text_field :comment%>  
+          </div>
+          <div class="col-sm-2">
+            <%= comment.submit "Comment" %>
+          </div>
+        </div>
+      <% end %>
+  </div>
+  <hr>
+<% end %>

@@ -1,19 +1,24 @@
 <% content_for :title, 'Micro Post'%>
-<h3>New Micropost</h3>
-<%= form_for(@micropost,remote: true) do |micropost| %>
-  <div>
-    <%= micropost.label :content %>
-    <%= micropost.text_field :content %>
+<div class="m-3 row d-flex justify-content-center">
+  <div class="col-md-6">
+    <div class="w-100 timeMagin">
+      <div class="row">
+        <h3 style="text-align: center;">New Micropost</h3>
+      </div>
+      <div class="row" id="microPostForm">
+        <%= render partial:"microposts/micropostform" %>
+      </div>
+    </div>
+    <div class="w-100 timeMagin">
+      <div class="row">
+        <h3 style="text-align: center;">Microposts</h3>
+      </div>
+      <hr>
+      <div id="userMicroposts" class="row" >
+        <%= render partial: "microposts/microposts" %>
+      </div>
+    </div>
   </div>
-  <div>
-    <%= micropost.file_field :micropost_image %>
-  </div>
-  <%= micropost.submit %>
-<% end %>
-
-<h2>Microposts</h2>
-<div id="userMicroposts" >
-  <%= render partial: "microposts/microposts" %>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>

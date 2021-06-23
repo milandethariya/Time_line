@@ -1,6 +1,6 @@
 .container{
+	background-color: ghostwhite;
 	/*border:5px solid red;
-
   border-radius: 50px;
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.38);*/
 }
@@ -18,12 +18,24 @@
 
 .formStyle{
 	width: 50%;
-  margin: 0 25% 0 25%;
+  margin: 140px 25% 0 25%;
   background-color: lightgrey;
 
 }
+
+.formStyleNew{
+	width: 50%;
+  margin: 0 25% 0 25%;
+  background-color: lightgrey;
+}
+
 .footer{
 	background-color: #f8f9fa;
 }
 
+.timeMagin{
+	background-color: white;
+	margin: 20px;
+	padding: 20px
+}
 

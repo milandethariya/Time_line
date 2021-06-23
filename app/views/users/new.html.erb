@@ -1,8 +1,21 @@
 <% content_for :title, 'Sign Up' %>
-<div class="formStyle">
-	<h1 class="row justify-content-center">Sign up</h1>
+<div class="formStyleNew align-items-center p-3">
+	<div class="row center">
+    <div class="col-1 offset-3">
+      <a class="navbar-brand d-inline-block" href="#">
+        <%= image_tag("logo.jpg", :alt => "logo", size: '50') %>
+      </a>
+    </div>
+    <div class="col-4">
+      <h1 class="row justify-content-center">Log in</h1>
+    </div>
+  </div>
 	<%= render 'form', user: @user %>
+	<div class="text-center"><small>Have an account?</small>
+    <%= link_to "Log in", root_path %>
+  </div>
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
