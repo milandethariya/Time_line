@@ -1,6 +1,10 @@
 <% content_for :title, 'Edit' %>
-<h1>Edit User</h1>
-<%= render 'form', user: @user %>
+<div class="formStyleNew align-items-center p-3">
+	<div class="row center">
+		<h1 style="text-align: center;">Edit User</h1>
+  </div>
+	<%= render 'form', user: @user %>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
@@ -19,4 +23,7 @@
 		
 	})
 </script>
+
+
+
 

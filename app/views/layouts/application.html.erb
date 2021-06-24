@@ -23,7 +23,7 @@
       <% if logged_in? %>
         <%= render 'layouts/header' %>
       <% end %>
-      <div class="container fill">
+      <div class="container" style="height: 100%; min-height: 100%">
         <%= yield %>
       </div>
       <%= render 'layouts/footer' %>

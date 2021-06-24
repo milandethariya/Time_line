@@ -1,16 +1,28 @@
 <% content_for :title, 'Friends' %>
-<h1>Friends</h1>
-<% if @friends.present? %>
-  <table>
-    <tr>
-      <th>Profile</th>
-      <th>Name</th>
-    </tr>
-    <% @friends.each do |friend| %>
-      <tr>
-        <td><%= image_tag friend.profile_image.url, style: 'height:3vw;width:5vw;'if friend.profile_image?%></td>
-        <td><%= friend.name %></td>
-      <tr>
-    <% end %>
-  </table>
-<% end %>
+<div class="m-3 row d-flex justify-content-center">
+  <div class="col-md-6">
+    <div class="w-100 timeMagin">
+      <div class="row">
+        <h3 style="text-align: center;">Friends</h3>
+      </div>
+      <div class="row">
+        <% if @friends.present? %>
+          <div class="table-responsive-md">
+            <table class="table table-striped">
+              <tr>
+                <th scope="col">Profile</th>
+                <th scope="col">Name</th>
+              </tr>
+              <% @friends.each do |friend| %>
+                <tr>
+                  <td><%= image_tag friend.profile_image.url, style: 'height:3vw;width:5vw;'if friend.profile_image?%></td>
+                  <td><%= friend.name %></td>
+                <tr>
+              <% end %>
+            </table>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>  
+</div>

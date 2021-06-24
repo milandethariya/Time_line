@@ -1,20 +1,40 @@
 <% content_for :title, 'Reject Users' %>
-<h1>Reject List </h1>
-<% if @users.present? %>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Profile picture</th>
-      <th>D.O.B</th>
-    </tr>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td><%= image_tag user.profile_image.url, style: 'height:3vw;width:5vw;'if user.profile_image?%></td>
-        <td><%= user.birthdate %></td>
-      </tr>
-    <% end %>
-  </table>
-<% end %>
+<div class="m-3 row d-flex justify-content-center">
+  <div class="col-md-6">
+    <div class="w-100 timeMagin">
+      <div class="row">
+        <h3 style="text-align: center;">Reject List</h3>
+      </div>
+      <div class="row mb-2">
+        <div class="col-4">
+          <%= link_to "User's Activatation List", activation_index_path, :class=> "text-decoration-none"%>
+        </div>
+        <div class="col-3 offset-md-5">
+          <%= link_to "Activated List", activation_approvelist_path,class: "text-decoration-none" %>
+        </div>
+      </div>
+      <div class="row">
+        <% if @users.present? %>
+          <div class="table-responsive-md">
+            <table class="table table-striped">
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Profile picture</th>
+                <th scope="col">D.O.B</th>
+              </tr>
+              <% @users.each do |user| %>
+                <tr>
+                  <td><%= user.name %></td>
+                  <td><%= user.email %></td>
+                  <td><%= image_tag user.profile_image.url, style: 'height:3vw;width:5vw;'if user.profile_image?%></td>
+                  <td><%= user.birthdate %></td>
+                <tr>
+              <% end %>
+            </table>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>  
+</div>

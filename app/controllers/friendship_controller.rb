@@ -7,7 +7,11 @@ class FriendshipController < ApplicationController
 
   def create
   	@friendship = current_user.senders.create(receiver_id: params[:id])
-  	redirect_to users_path
+    @friendrequestuser = User.find_by(id: params[:id])
+    respond_to do |format|
+      format.html{ redirect_to users_path }
+      format.js
+    end
   end
 
   def receive
