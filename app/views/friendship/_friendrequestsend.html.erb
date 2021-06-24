@@ -1,0 +1,9 @@
+<% unless user == current_user %>
+	<% request = Friendship.find_by(sender_id: current_user.id, receiver_id: user.id) || Friendship.find_by(sender_id: user.id, receiver_id: current_user.id) %>
+	<% friendship = Friendship.find_by(sender_id: current_user.id, receiver_id: user.id, status: "accept") || Friendship.find_by(sender_id: user.id, receiver_id: current_user.id, status: "accept") %>
+	<% if !request.present? %>
+		<%= link_to 'Send Friend Request', friendship_index_path(id: user.id),remote: true, method: "post",class: "text-decoration-none"%>
+	<% elsif friendship.present? %>
+		<%= "#{user.name} and you are friends" %>
+	<% end %>
+<% end %>

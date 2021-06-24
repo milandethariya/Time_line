@@ -1,9 +1,23 @@
-<% unless user == current_user %>
-	<% request = Friendship.find_by(sender_id: current_user.id, receiver_id: user.id) || Friendship.find_by(sender_id: user.id, receiver_id: current_user.id) %>
-	<% friendship = Friendship.find_by(sender_id: current_user.id, receiver_id: user.id, status: "accept") || Friendship.find_by(sender_id: user.id, receiver_id: current_user.id, status: "accept") %>
-	<% if !request.present? %>
-		<%= link_to 'Send Friend Request', friendship_index_path(id: user.id),remote: true, method: "post",class: "text-decoration-none"%>
-	<% elsif friendship.present? %>
-		<%= "#{user.name} and you are friends" %>
-	<% end %>
+<% if receivers.present? %>
+	<div class="table-responsive-md">
+		<table class="table table-striped">
+			<tr>
+				<th scope="col">Profile</th>
+				<th scope="col">Name</th>
+				<th scope="col">Accept</th>
+				<th scope="col">Reject</th>
+			</tr>
+			<% receivers.each do |receiver| %>
+				<% user = receiver.sender %>
+				<% if user.present? %>
+					<tr>
+						<td><%= image_tag user.profile_image.url, style: 'height:3vw;width:5vw;'if user.profile_image?%></td>
+						<td><%= user.name %></td>
+						<td><%= link_to "Accept", friendship_path(receiver.id),class: "text-decoration-none",remote: true, method: "patch"%></td>
+						<td><%= link_to "Reject", friendship_path(receiver.id),class: "text-decoration-none",remote: true, method: "delete"%></td>
+					<tr>
+				<% end %>
+			<% end %>
+		</table>
+	</div>
 <% end %>

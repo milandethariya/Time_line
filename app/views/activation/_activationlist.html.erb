@@ -1,0 +1,36 @@
+<% if @users.present? %>
+<div class="table-responsive-lg">
+  <table class="table table-striped table-sm">
+    <tr>
+      <th scope="col">Name</th>
+			<th scope="col">Email</th>
+			<th scope="col">Profile picture</th>
+			<th scope="col">D.O.B</th>
+			<th scope="col">Activation</th>
+			<th scope="col">Rejection</th>
+    </tr>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+				<td><%= user.email %></td>
+				<td><%= image_tag user.profile_image.url, style: 'height:3vw;width:5vw;'if user.profile_image?%></td>
+				<td><%= user.birthdate %></td>
+				<% if user.is_admin == true %> 
+					<td>Admin</td>
+				<% else %>
+					<% if user.is_activated == false %>
+						<td><%= link_to "Approve", approve_path(id: user.id), method: "patch",remote: true,class: "text-decoration-none" %></td>
+					<% else %> 
+						<td>Activate</td>
+					<% end %>
+				<% end %>
+				<% if user.is_admin == true %> 
+					<td>Admin</td>
+				<% else %>
+					<td><%= link_to "Reject", reject_path(id: user.id), method: "patch",remote: true, class: "text-decoration-none" %></td>
+				<% end %>
+      <tr>
+    <% end %>
+  </table>
+</div>
+<% end %>

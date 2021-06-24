@@ -5,30 +5,8 @@
       <div class="row">
         <h3 style="text-align: center;">Friend Request By</h3>
       </div>
-			<div class="row">
-				<% if @receivers.present? %>
-					<div class="table-responsive-md">
-						<table class="table table-striped">
-							<tr>
-								<th scope="col">Profile</th>
-								<th scope="col">Name</th>
-								<th scope="col">Accept</th>
-								<th scope="col">Reject</th>
-							</tr>
-							<% @receivers.each do |receiver| %>
-							<% user = receiver.sender %>
-								<% if user.present? %>
-									<tr>
-										<td><%= image_tag user.profile_image.url, style: 'height:3vw;width:5vw;'if user.profile_image?%></td>
-										<td><%= user.name %></td>
-										<td><%= link_to "Accept", friendship_path(receiver.id),class: "text-decoration-none", method: "patch"%></td>
-										<td><%= link_to "Reject", friendship_path(receiver.id),class: "text-decoration-none", method: "delete"%></td>
-									<tr>
-								<% end %>
-							<% end %>
-						</table>
-					</div>
-				<% end %>
+			<div class="row" id="friendrequest">
+				<%= render partial: "friendship/friendrequest", locals: {receivers: @receivers} %>
 			</div>
 		</div>
 	</div>	

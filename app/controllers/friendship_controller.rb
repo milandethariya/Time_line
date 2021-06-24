@@ -21,12 +21,20 @@ class FriendshipController < ApplicationController
   def update
   	friendship = Friendship.find_by(id: params[:id])
   	friendship.update(status: "accept")
-  	redirect_to user_path(current_user)
+    @receivers = current_user.receivers.where(status: "pending")
+    respond_to do |format|
+  	 format.html{redirect_to user_path(current_user)}
+     format.js
+    end
   end
 
   def destroy
   	friendship = Friendship.find_by(id: params[:id])
   	friendship.destroy
-  	redirect_to(current_user)
+    @receivers = current_user.receivers.where(status: "pending")
+  	respond_to do |format|
+     format.html{redirect_to user_path(current_user)}
+     format.js
+    end
   end
 end

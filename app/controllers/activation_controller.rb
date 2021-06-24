@@ -6,13 +6,21 @@ class ActivationController < ApplicationController
   def approve
   	@user = User.find(params[:id])
   	@user.update_attributes(is_activated: true,is_rejected: false)
-  	redirect_to activation_index_path
+    @users = User.all
+    respond_to do |format|
+  	 format.html{redirect_to activation_index_path}
+     format.js
+    end
   end
 
   def reject
   	@user = User.find(params[:id])
   	@user.update_attributes(is_rejected: true,is_activated: false)
-  	redirect_to activation_index_path
+    @users = User.all
+  	respond_to do |format|
+     format.html{redirect_to activation_index_path}
+     format.js
+    end
   end
 
   def approvelist
