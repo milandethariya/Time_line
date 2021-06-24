@@ -27,38 +27,14 @@
     <div class="row d-block mx-auto rounded">
       <%= image_tag micropost.micropost_image.url,style:'height:20vw;width:35vw;' if  micropost.micropost_image?%>
     </div>
-    <div class="row mt-2">
-      <div class="col-md-4">
-        <div class="row">
-          <%= link_to "#{pluralize(micropost.likes.where(is_like: true).count,'Like')}", likes_likeshow_micropost_path(id: micropost.id),class: "text-decoration-none" %>
-        </div>
-        <div class="row">
-          <% unless micropost.likes.where(user_id: current_user.id, is_like: true).count == 1 %>
-            <%= form_for(current_user.likes.build,url: likes_like_micropost_path(micropost), method: 'patch')  do |f| %>
-            <div><%= hidden_field_tag :micropost_id, micropost.id %></div>
-            <%= f.submit "Like", class: "btn btn-primary btn-sm" %>
-            <% end %>
-          <% end %>
+    <div class="row mt-2 d-flex">
+      <div class="col-md-8">
+        <div class="d-flex" id="micropostLike-<%= micropost.id %>">
+          <%= render partial: "likes/likeForm", locals: {micropost: micropost}%>
         </div>
       </div>
       <div class="col-md-4">
-        <div class="row">
-          <%= link_to "#{pluralize(micropost.likes.where(is_like: false).count,'Unlike')}", likes_unlikeshow_micropost_path(id: micropost.id),class: "text-decoration-none" %>
-        </div>
-        <div class="row">
-          <% unless micropost.likes.where(user_id: current_user.id, is_like: false).count == 1 %>
-            <%= form_with url:likes_unlike_micropost_path(micropost), method: 'patch' do |f| %>
-            <div><%= hidden_field_tag :micropost_id, micropost.id %></div>
-            <%= f.submit "Unlike", class: "btn btn-primary btn-sm" %>
-            <% end %>
-          <% end %>
-
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="row">
-          <%= link_to "#{pluralize(micropost.comments.count,'Comment')}", comments_show_micropost_path(id: micropost.id), class: "text-decoration-none" %>
-        </div>
+        <%= link_to "#{pluralize(micropost.comments.count,'Comment')}", comments_show_micropost_path(id: micropost.id), class: "text-decoration-none" %>
       </div>
     </div>
       <%= form_for @comment,method: 'post', url:comments_create_micropost_path(micropost) do |comment| %>

@@ -1,0 +1,27 @@
+
+<div class="col-md-6">
+  <div class="row">
+    <%= link_to "#{pluralize(micropost.likes.where(is_like: true).count,'Like')}", likes_likeshow_micropost_path(id: micropost.id),class: "text-decoration-none" %>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <% unless micropost.likes.where(user_id: current_user.id, is_like: true).count == 1 %>
+        <%= link_to "Like",likes_like_micropost_path(id: micropost.id),method: :patch,class: "btn btn-primary text-decoration-none",remote: true %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="col-md-6">
+  <div class="row">
+    <%= link_to "#{pluralize(micropost.likes.where(is_like: false).count,'Unlike')}", likes_unlikeshow_micropost_path(id: micropost.id),class: "text-decoration-none" %>
+  </div>
+  <div class="row">
+    <div class="row">
+      <div class="col-sm-6 ">
+        <% unless micropost.likes.where(user_id: current_user.id, is_like: false).count == 1 %>
+          <%= link_to "Unlike",likes_unlike_micropost_path(id: micropost.id),method: :patch,class: "btn btn-primary text-decoration-none",remote: true %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
