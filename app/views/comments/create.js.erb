@@ -1,0 +1,2 @@
+$("#micropostcomment-<%= @micropost.id %>").html("<%= j render(partial: 'comments/commentcount', locals: {micropost: @micropost})%>");
+$("#commentform-<%= @micropost.id %>").html("<%= j render(partial: 'comments/commentform', locals: {micropost: @micropost})%>");

@@ -3,9 +3,9 @@ class MicropostsController < ApplicationController
   def create
     @micropost = current_user.microposts.build(micropost_params)
     if @micropost.save
-      flash[:success] = "Micropost created!"     
+      flash.now[:success] = "Micropost created!"     
     else
-      flash[:danger] = 'micropost have 1 to 140 characters!'
+      flash.now[:danger] = 'micropost have 1 to 140 characters!'
     end
     respond_to do |format|
       format.html{redirect_to timeline_user_path(current_user)}
@@ -24,7 +24,7 @@ class MicropostsController < ApplicationController
   def destroy
     @micropost = current_user.microposts.find_by(id: params[:id])
     @micropost.destroy
-    flash[:success] = "Micropost deleted!"
+    flash.now[:success] = "Micropost deleted!"
     respond_to do |format|
     format.html{redirect_to timeline_user_path(current_user)}
     format.js{

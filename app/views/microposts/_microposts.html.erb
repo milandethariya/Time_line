@@ -33,11 +33,13 @@
           <%= render partial: "likes/likeForm", locals: {micropost: micropost}%>
         </div>
       </div>
-      <div class="col-md-4">
-        <%= link_to "#{pluralize(micropost.comments.count,'Comment')}", comments_show_micropost_path(id: micropost.id), class: "text-decoration-none" %>
+      <div class="col-md-4" id="micropostcomment-<%= micropost.id %>">
+        <%= render partial: "comments/commentcount", locals: {micropost: micropost} %>
+        <%#= link_to "#{pluralize(micropost.comments.count,'Comment')}", comments_show_micropost_path(id: micropost.id), class: "text-decoration-none" %>
       </div>
     </div>
-      <%= form_for @comment,method: 'post', url:comments_create_micropost_path(micropost) do |comment| %>
+    <div class="row" id="commentform-<%= micropost.id %>">
+      <%= form_for @comment,method: 'post', url:comments_create_micropost_path(micropost),remote: true do |comment| %>
         <div><%= hidden_field_tag :micropost_id, micropost.id %></div>
         <div class="row mt-2 mb-2">
           <div class="col-sm-3">
@@ -51,6 +53,7 @@
           </div>
         </div>
       <% end %>
+    </div>
   </div>
   <hr>
 <% end %>

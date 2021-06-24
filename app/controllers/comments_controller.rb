@@ -6,9 +6,13 @@ class CommentsController < ApplicationController
 	end
 
 	def create
-		micropost = Micropost.find_by(id:params[:micropost_id])
-		micropost.comments.create(user_id: current_user.id, comment: params[:comment][:comment] )
-		redirect_to timeline_user_path(current_user)
+		@micropost = Micropost.find_by(id:params[:micropost_id])
+		@micropost.comments.create(user_id: current_user.id, comment: params[:comment][:comment] )
+		@comment = Comment.new
+		respond_to do |format|
+			format.html{ redirect_to timeline_user_path(current_user)}
+			format.js
+		end
 	end
 
 	def destroy

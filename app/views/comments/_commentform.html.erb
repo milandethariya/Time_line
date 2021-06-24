@@ -1,0 +1,14 @@
+<%= form_for @comment,method: 'post', url:comments_create_micropost_path(micropost),remote: true do |comment| %>
+  <div><%= hidden_field_tag :micropost_id, micropost.id %></div>
+  <div class="row mt-2 mb-2">
+    <div class="col-sm-3">
+      <%= comment.label :comment %> 
+    </div>
+    <div class="col-sm-6">
+      <%= comment.text_field :comment%>  
+    </div>
+    <div class="col-sm-2">
+      <%= comment.submit "Comment" %>
+    </div>
+  </div>
+<% end %>
