@@ -21,6 +21,7 @@ html,body {
 
 .formStyle{
 	width: 50%;
+	height: 100%;
   margin: 0 25% 0 25%;
   background-color: white
 
@@ -28,6 +29,7 @@ html,body {
 
 .formStyleNew{
 	width: 50%;
+	height: 100%;
   margin: 0 25% 0 25%;
   background-color: white
 }
@@ -41,6 +43,29 @@ html,body {
 	margin: 20px;
 	padding: 20px
 }
+
+
+
+
+.image-stack {
+  position: relative;
+  width: 100%;
+}
+
+.image-stack__item--bottom {
+  position: absolute;
+  right: -80px;
+  top: 105px;
+  width: 80%; 
+  /*z-index: -1;*/
+}
+
+.image-stack__item--top {
+  padding-top: 20px; 
+  padding-right: 20%; 
+  width: 80%;
+}
+
 
 
 

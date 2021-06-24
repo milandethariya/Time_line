@@ -1,25 +1,32 @@
 <% content_for :title, 'Show' %>
 <p id="notice"><%= notice %></p>
-<h1><%= @user.name %></h1>
-<hr>
-<table>
-	<tr>
-		<td><%= image_tag @user.profile_image.url, style: 'height:3vw;width:5vw;'if @user.profile_image?%> </td>
-		<td><%= image_tag @user.cover_image.url, style: 'height:3vw;width:5vw;'if @user.cover_image?%></td>
-	</tr>
-	<tr>
-		<%#= record =  Friendship.find_by(sender_id: current_user.id, receiver_id: @user.id)%> 
-		<%#= Friendship.find_by(sender_id: @user.id, receiver_id: current_user.id)%> 
-		<% unless @user == current_user %>
-			<% request = Friendship.find_by(sender_id: current_user.id, receiver_id: @user.id) || Friendship.find_by(sender_id: @user.id, receiver_id: current_user.id) %>
-			<% friendship = Friendship.find_by(sender_id: current_user.id, receiver_id: @user.id, status: "accept") || Friendship.find_by(sender_id: @user.id, receiver_id: current_user.id, status: "accept") %>
-			<% if !request.present? %>
-				<td><%= link_to 'Send Friend Request', friendship_index_path(id: @user.id), method: "post" %></td>
-			<% elsif friendship.present? %>
-				<td> <%= "#{@user.name} and you are friends" %> </td>
-			<% end %>
-		<% end %>
-	</tr>
-</table>
-
-
+<div class="m-3 row d-flex justify-content-center">
+  <div class="col-md-6">
+    <div class="w-100 timeMagin">
+      <div class="row">
+        <h3 style="text-align: center;"><%= @user.name %></h3>
+      </div>
+  		<div class="row">
+  			<div class="image-stack">
+  				<div class="image-stack__item image-stack__item--bottom ">
+  					<%= image_tag @user.profile_image.url, style: 'height:10vw;width:10vw;', class: "rounded-circle "if @user.profile_image?%>
+					</div>
+					<div class="image-stack__item image-stack__item--top has-bg-img bg-purple bg-blend-multiply">
+						<%= image_tag @user.cover_image.url, style: 'height:18vw;width:34vw;margin-left: auto;margin-right: auto;'if @user.cover_image? %>
+					</div>
+				</div>
+			</div>
+			<div class="row text-center mt-3">
+				<% unless @user == current_user %>
+					<% request = Friendship.find_by(sender_id: current_user.id, receiver_id: @user.id) || Friendship.find_by(sender_id: @user.id, receiver_id: current_user.id) %>
+					<% friendship = Friendship.find_by(sender_id: current_user.id, receiver_id: @user.id, status: "accept") || Friendship.find_by(sender_id: @user.id, receiver_id: current_user.id, status: "accept") %>
+					<% if !request.present? %>
+						<%= link_to 'Send Friend Request', friendship_index_path(id: @user.id), method: "post" %>
+					<% elsif friendship.present? %>
+						<%= "#{@user.name} and you are friends" %>
+					<% end %>
+				<% end %>
+			</div>
+  	</div>
+	</div>
+</div>
