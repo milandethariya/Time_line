@@ -1,16 +1,22 @@
 class LikesController < ApplicationController
   def likeshow
   	puts params[:id]
-  	micropost = Micropost.find_by(id: params[:id])
-    like_user_id = micropost.likes.where(is_like: true).pluck(:user_id)
+  	@micropost = Micropost.find_by(id: params[:id])
+    like_user_id = @micropost.likes.where(is_like: true).pluck(:user_id)
     @users = User.where(id: like_user_id)
+    respond_to do |format|
+      format.js
+    end
   end
 
   def unlikeshow
     puts params[:id]
-    micropost = Micropost.find_by(id: params[:id])
-    like_user_id = micropost.likes.where(is_like: false).pluck(:user_id)
+    @micropost = Micropost.find_by(id: params[:id])
+    like_user_id = @micropost.likes.where(is_like: false).pluck(:user_id)
     @users = User.where(id: like_user_id)
+    respond_to do |format|
+      format.js
+    end
   end
 
   def like

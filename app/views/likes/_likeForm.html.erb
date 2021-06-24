@@ -1,7 +1,7 @@
 
 <div class="col-md-6">
   <div class="row">
-    <%= link_to "#{pluralize(micropost.likes.where(is_like: true).count,'Like')}", likes_likeshow_micropost_path(id: micropost.id),class: "text-decoration-none" %>
+    <%= link_to "#{pluralize(micropost.likes.where(is_like: true).count,'Like')}", likes_likeshow_micropost_path(id: micropost.id),class: "text-decoration-none",remote: true %>
   </div>
   <div class="row">
     <div class="col-sm-6">
@@ -13,7 +13,7 @@
 </div>
 <div class="col-md-6">
   <div class="row">
-    <%= link_to "#{pluralize(micropost.likes.where(is_like: false).count,'Unlike')}", likes_unlikeshow_micropost_path(id: micropost.id),class: "text-decoration-none" %>
+    <%= link_to "#{pluralize(micropost.likes.where(is_like: false).count,'Unlike')}", likes_unlikeshow_micropost_path(id: micropost.id),class: "text-decoration-none",remote: true %>
   </div>
   <div class="row">
     <div class="row">
