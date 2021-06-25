@@ -37,31 +37,40 @@ class UsersController < ApplicationController
     if params[:user][:password] == params[:user][:password_confirmation]
       respond_to do |format|
         if @user.save
-          format.html { redirect_to root_path, notice: "User was successfully created." }
+          flash[:success] = "User was successfully created."
+          format.html { redirect_to root_path }
           format.json { render :show, status: :created, location: @user }
         else
-          flash.now[:status] = "unprocessable_entity"
+          flash.now[:notice] = "unprocessable_entity"
           format.html { render :new} 
           format.json { render json: @user.errors, status: :unprocessable_entity }
         end
       end
     else
-      flash.now[:status] = "password & conform_password not match"
+      #@user.errors.add(:password,"& conform_password not match")
+      flash.now[:danger] = "password & conform_password not match"
       render :new   
     end
   end
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: "User was successfully updated." }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        flash.now[:status] = "unprocessable_entity"
-        format.html { render :edit}
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+    if params[:user][:password] == params[:user][:password_confirmation]
+      respond_to do |format|
+        if @user.update(user_params)
+          flash[:success] = "User was successfully updated."
+          format.html { redirect_to @user, success: "User was successfully updated." }
+          format.json { render :show, status: :ok, location: @user }
+        else
+          flash.now[:notice] = "unprocessable_entity"
+          format.html { render :edit}
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      #@user.errors.add(:password,"& conform_password not match")
+      flash.now[:danger] = "password & conform_password not match"
+      render :edit
     end
   end
 
@@ -69,7 +78,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: "User was successfully destroyed." }
+      format.html { redirect_to users_url, success: "User was successfully destroyed." }
       format.json { head :no_content }
     end
   end

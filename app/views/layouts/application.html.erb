@@ -17,15 +17,34 @@
   </head>
 
   <body>
-      <% flash.each do |key, value| %>
-        <%= "#{key}: #{value}." %>
-      <% end %>
-      <% if logged_in? %>
-        <%= render 'layouts/header' %>
-      <% end %>
-      <div class="container" style="height: 100%; min-height: 100%">
-        <%= yield %>
+    <% if logged_in? %>
+      <%= render 'layouts/header' %>
+    <% end %>
+    <% if flash[:success].present? %>
+      <div class="alert alert-success" role="alert">
+        <% flash.each do |key, value| %>
+          <%= "#{key}: #{value}." %>
+        <% end %>
       </div>
-      <%= render 'layouts/footer' %>
+    <% elsif flash[:notice].present? %>
+      <div class="alert alert-warning" role="alert">
+        <% flash.each do |key, value| %>
+          <%= "#{key}: #{value}." %>
+        <% end %>
+      </div>
+    <% elsif flash[:danger].present? %>
+      <div class="alert alert-danger" role="alert">
+        <% flash.each do |key, value| %>
+          <%= "#{key}: #{value}." %>
+        <% end %>
+      </div>
+    <% end %>
+       
+    <div class="flash_wrapper">
+    </div>
+    <div class="container" style="height: 100%; min-height: 100%">
+      <%= yield %>
+    </div>
+    <%= render 'layouts/footer' %>
   </body>
 </html>

@@ -3,8 +3,8 @@
 	<% if !request.present? %>
 		<%= link_to 'Send Friend Request', friendship_index_path(id: user.id),remote: true, method: "post",class: "text-decoration-none"%>
 	<% elsif request.status == "accept" %>
-		<%= "#{user.name} and you are friends" %>
+		<p class="text-center"><%= "#{user.name} and you are friends" %></p>
 	<% elsif request.status == "pending" %>
-		Friend Request is pending
+		<p class="text-center"> Friend Request is pending </p>
 	<% end %>
 <% end %>

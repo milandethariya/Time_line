@@ -8,8 +8,9 @@ class ActivationController < ApplicationController
   	@user.update_attributes(is_activated: true,is_rejected: false)
     @users = User.all
     respond_to do |format|
-  	 format.html{redirect_to activation_index_path}
-     format.js
+      flash.now[:notice] = "#{@user.name} is Approved !"
+      format.html{redirect_to activation_index_path}
+      format.js
     end
   end
 
@@ -18,8 +19,9 @@ class ActivationController < ApplicationController
   	@user.update_attributes(is_rejected: true,is_activated: false)
     @users = User.all
   	respond_to do |format|
-     format.html{redirect_to activation_index_path}
-     format.js
+      flash.now[:notice] = "#{@user.name} is Rejected !"
+      format.html{redirect_to activation_index_path}
+      format.js
     end
   end
 

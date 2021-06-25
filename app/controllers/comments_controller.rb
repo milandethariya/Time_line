@@ -24,7 +24,8 @@ class CommentsController < ApplicationController
     @micropost = comment.micropost
     @comments = @micropost.comments
     if comment.user.id == current_user.id || User.find_by(is_admin: true).id
-      Comment.find_by(id: params[:id]).destroy    
+      Comment.find_by(id: params[:id]).destroy
+      flash.now[:success] = "comment deleted!"    
     end
     respond_to do |format|
       format.html{ redirect_to timeline_user_path(current_user) }

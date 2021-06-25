@@ -3,7 +3,7 @@ class MicropostsController < ApplicationController
   def create
     @micropost = current_user.microposts.build(micropost_params)
     if @micropost.save
-      flash.now[:success] = "Micropost created!"     
+      flash.now[:notice] = "Micropost created!"     
     else
       flash.now[:danger] = 'micropost have 1 to 140 characters!'
     end
@@ -16,6 +16,7 @@ class MicropostsController < ApplicationController
         @microposts = Micropost.where(user_id: friends)
         @comment = Comment.new
         @micropost = Micropost.new
+        #flash.now[:notice] = 'micropost was successfully created'
       }
     end
     #redirect_to request.referrer

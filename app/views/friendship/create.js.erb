@@ -1,1 +1,2 @@
-$("#friendRequest").html("<%= j render(partial: 'friendship/friendrequestsend', locals: {user:@friendrequestuser})%>")
+$("#friendRequest").html("<%= j render(partial: 'friendship/friendrequestsend', locals: {user:@friendrequestuser})%>");
+$('.flash_wrapper').html("<%= escape_javascript(render 'layouts/messages') %>");

@@ -8,6 +8,7 @@ class FriendshipController < ApplicationController
   def create
   	@friendship = current_user.senders.create(receiver_id: params[:id])
     @friendrequestuser = User.find_by(id: params[:id])
+    flash.now[:notice] = "sent friendrequest to #{@friendrequestuser.name} !"
     respond_to do |format|
       format.html{ redirect_to users_path }
       format.js
@@ -22,6 +23,7 @@ class FriendshipController < ApplicationController
   	friendship = Friendship.find_by(id: params[:id])
   	friendship.update(status: "accept")
     @receivers = current_user.receivers.where(status: "pending")
+    flash.now[:notice] = "Now you and #{User.find(friendship.sender_id).name} are friends !"
     respond_to do |format|
   	 format.html{redirect_to user_path(current_user)}
      format.js
