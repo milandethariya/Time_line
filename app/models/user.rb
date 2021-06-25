@@ -33,4 +33,8 @@ class User < ApplicationRecord
     likes.where(user_id: current_user.id).count == "1"
   end
 
+  def find_friend_request(user)
+		Friendship.find_by(sender_id: [user.id,self.id], receiver_id: [user.id,self.id])
+	end
+
 end

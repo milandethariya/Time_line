@@ -12,6 +12,7 @@ class CommentsController < ApplicationController
     @micropost = Micropost.find_by(id:params[:micropost_id])
     @micropost.comments.create(user_id: current_user.id, comment: params[:comment][:comment] )
     @comment = Comment.new
+    @comments = @micropost.comments
     respond_to do |format|
       format.html{ redirect_to timeline_user_path(current_user)}
       format.js

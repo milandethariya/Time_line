@@ -12,5 +12,4 @@ class Micropost < ApplicationRecord
       errors.add(:picture, "micropost_image should be less than 2MB")
     end
   end
-
 end

@@ -1,1 +1,2 @@
 $("#micropostLike-<%= @micropost.id %>").html("<%= j render(partial: 'likes/likeForm',locals: {micropost: @micropost});%>");
+$("#list-unlike-<%= @micropost.id %>:not(:empty)").html("<%= j render(partial: 'likes/unlikeshow')%>");

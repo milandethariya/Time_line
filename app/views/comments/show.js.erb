@@ -1,2 +1,3 @@
 $(".clear").html("");
-$("#list-<%= @micropost.id %>").html("<%= j render(partial: 'comments/commentshow')%>");
+$("#list-comment-<%= @micropost.id %>").html("<%= j render(partial: 'comments/commentshow')%>");
+

@@ -41,9 +41,17 @@
     <div class="row" id="commentform-<%= micropost.id %>">
       <%= render partial: "comments/commentform",locals: {micropost: micropost} %>
     </div>
-    <div class="row clear" id="list-<%= micropost.id %>">
-
+    <!--<div class="row clear" id="list-<%#= micropost.id %>">-->
+    <div class="row clear" id="list-like-<%= micropost.id %>">
+     
     </div>
+    <div class="row clear" id="list-unlike-<%= micropost.id %>">
+       
+    </div>
+    <div class="row clear" id="list-comment-<%= micropost.id %>">
+      
+    </div>
+    <!--</div>-->
   </div>
   <hr>
 <% end %>

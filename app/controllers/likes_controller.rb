@@ -12,8 +12,8 @@ class LikesController < ApplicationController
   def unlikeshow
     puts params[:id]
     @micropost = Micropost.find_by(id: params[:id])
-    like_user_id = @micropost.likes.where(is_like: false).pluck(:user_id)
-    @users = User.where(id: like_user_id)
+    unlike_user_id = @micropost.likes.where(is_like: false).pluck(:user_id)
+    @users = User.where(id: unlike_user_id)
     respond_to do |format|
       format.js
     end
@@ -26,6 +26,8 @@ class LikesController < ApplicationController
     else
       current_user.likes.create(micropost_id: @micropost.id, is_like: true)
     end
+    like_user_id = @micropost.likes.where(is_like: true).pluck(:user_id)
+    @users = User.where(id: like_user_id)
     respond_to do |format|
       format.html{ redirect_to timeline_user_path(current_user)}
       format.js
@@ -39,6 +41,8 @@ class LikesController < ApplicationController
     else
       current_user.likes.create(micropost_id: @micropost.id, is_like: false)
     end
+    unlike_user_id = @micropost.likes.where(is_like: false).pluck(:user_id)
+    @users = User.where(id: unlike_user_id)
     respond_to do |format|
       format.html{ redirect_to timeline_user_path(current_user)}
       format.js
