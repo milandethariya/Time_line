@@ -11,12 +11,8 @@ class UsersController < ApplicationController
 
   def timeline
     @micropost = current_user.microposts.build
-    #friends =  current_user.senders.where(status: "accept").pluck(:receiver_id)
-    #friends += current_user.receivers.where(status: "accept").pluck(:sender_id)
-    #friends.push(current_user.id)
-    #@microposts = Micropost.where(user_id: friends)
-    #@pagy, @microposts = pagy(Micropost.where(user_id: friends))
-    @pagy, @microposts = pagy(current_user.friend_microposts)
+    friends_id = current_user.friends_id
+    @pagy, @microposts = pagy(Micropost.where(user_id: friends_id))
     @comment = Comment.new
   end
 
@@ -49,7 +45,6 @@ class UsersController < ApplicationController
         end
       end
     else
-      #@user.errors.add(:password,"& conform_password not match")
       flash.now[:danger] = "password & conform_password not match"
       render :new   
     end
@@ -70,7 +65,6 @@ class UsersController < ApplicationController
         end
       end
     else
-      #@user.errors.add(:password,"& conform_password not match")
       flash.now[:danger] = "password & conform_password not match"
       render :edit
     end

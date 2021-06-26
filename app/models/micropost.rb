@@ -16,4 +16,20 @@ class Micropost < ApplicationRecord
   def find_user(user)
     self.user == user
   end
+
+  def like_count
+    self.likes.where(is_like: true).count
+  end
+
+  def unlike_count
+    self.likes.where(is_like: false).count
+  end
+
+  def is_like(user)
+    self.likes.where(user_id: user.id, is_like: true).count == 1 
+  end
+
+  def is_unlike(user)
+    self.likes.where(user_id: user.id, is_like: false).count == 1 
+  end
 end

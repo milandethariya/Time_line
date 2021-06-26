@@ -1,8 +1,8 @@
 class FriendshipController < ApplicationController
+  before_action :set_friendship, only: [:update, :destroy]
   def show
-  	friends =  current_user.senders.where(status: "accept").pluck(:receiver_id)
-  	friends += current_user.receivers.where(status: "accept").pluck(:sender_id)
-  	@friends = User.where(id: friends)
+    friends_id = current_user.friends_id
+  	@friends = User.where(id: friends_id)
   end
 
   def create
@@ -20,10 +20,9 @@ class FriendshipController < ApplicationController
   end
 
   def update
-  	friendship = Friendship.find_by(id: params[:id])
-  	friendship.update(status: "accept")
+  	@friendship.update(status: "accept")
     @receivers = current_user.receivers.where(status: "pending")
-    flash.now[:notice] = "Now you and #{User.find(friendship.sender_id).name} are friends !"
+    flash.now[:notice] = "Now you and #{User.find(@friendship.sender_id).name} are friends !"
     respond_to do |format|
   	 format.html{redirect_to user_path(current_user)}
      format.js
@@ -31,12 +30,17 @@ class FriendshipController < ApplicationController
   end
 
   def destroy
-  	friendship = Friendship.find_by(id: params[:id])
-  	friendship.destroy
+  	@friendship.destroy
     @receivers = current_user.receivers.where(status: "pending")
   	respond_to do |format|
      format.html{redirect_to user_path(current_user)}
      format.js
     end
   end
+
+  private
+
+    def set_friendship
+      @friendship = Friendship.find_by(id: params[:id])
+    end
 end

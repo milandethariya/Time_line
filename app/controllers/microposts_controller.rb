@@ -10,13 +10,10 @@ class MicropostsController < ApplicationController
     respond_to do |format|
       format.html{redirect_to timeline_user_path(current_user)}
       format.js{
-        friends =  current_user.senders.where(status: "accept").pluck(:receiver_id)
-        friends += current_user.receivers.where(status: "accept").pluck(:sender_id)
-        friends.push(current_user.id)
-        @pagy, @microposts = pagy(Micropost.where(user_id: friends))
+        friends_id = current_user.friends_id
+        @pagy, @microposts = pagy(Micropost.where(user_id: friends_id))
         @comment = Comment.new
         @micropost = Micropost.new
-        #flash.now[:notice] = 'micropost was successfully created'
       }
     end
     #redirect_to request.referrer
@@ -29,10 +26,8 @@ class MicropostsController < ApplicationController
     respond_to do |format|
     format.html{redirect_to timeline_user_path(current_user)}
     format.js{
-      friends =  current_user.senders.where(status: "accept").pluck(:receiver_id)
-      friends += current_user.receivers.where(status: "accept").pluck(:sender_id)
-      friends.push(current_user.id)
-      @pagy, @microposts = pagy(Micropost.where(user_id: friends))
+      friends_id = current_user.friends_id
+      @pagy, @microposts = pagy(Micropost.where(user_id: friends_id))
       @comment = Comment.new
     }
     end 

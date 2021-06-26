@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
+  before_action :set_micropost, only:[:show, :create]
+
   def show
-    @micropost = Micropost.find_by(id: params[:id])
     @comments = @micropost.comments
     respond_to do |format|
       format.js
@@ -9,7 +10,6 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @micropost = Micropost.find_by(id:params[:micropost_id])
     @micropost.comments.create(user_id: current_user.id, comment: params[:comment][:comment] )
     @comment = Comment.new
     @comments = @micropost.comments
@@ -33,4 +33,10 @@ class CommentsController < ApplicationController
     end
   end
 
+
+  private
+
+    def set_micropost
+      @micropost = Micropost.find_by(id: params[:id])
+    end
 end

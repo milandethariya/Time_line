@@ -37,10 +37,10 @@ class User < ApplicationRecord
 		Friendship.find_by(sender_id: [user.id,self.id], receiver_id: [user.id,self.id])
 	end
 
-	def friend_microposts
+	def friends_id
     friends =  self.senders.where(status: "accept").pluck(:receiver_id)
     friends += self.receivers.where(status: "accept").pluck(:sender_id)
     friends.push(self.id)
-    microposts = Micropost.where(user_id: friends)
+    #microposts = Micropost.where(user_id: friends)
   end
 end

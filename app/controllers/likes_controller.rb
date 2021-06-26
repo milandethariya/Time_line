@@ -1,26 +1,22 @@
 class LikesController < ApplicationController
+  before_action :set_micropost
   def likeshow
-  	puts params[:id]
-  	@micropost = Micropost.find_by(id: params[:id])
-    like_user_id = @micropost.likes.where(is_like: true).pluck(:user_id)
-    @users = User.where(id: like_user_id)
+    like_user_ids = @micropost.likes.where(is_like: true).pluck(:user_id)
+    @users = User.where(id: like_user_ids)
     respond_to do |format|
       format.js
     end
   end
 
   def unlikeshow
-    puts params[:id]
-    @micropost = Micropost.find_by(id: params[:id])
-    unlike_user_id = @micropost.likes.where(is_like: false).pluck(:user_id)
-    @users = User.where(id: unlike_user_id)
+    unlike_user_ids = @micropost.likes.where(is_like: false).pluck(:user_id)
+    @users = User.where(id: unlike_user_ids)
     respond_to do |format|
       format.js
     end
   end
 
   def like
-    @micropost = Micropost.find_by(id: params[:id])
     if Like.where(user_id: current_user.id, micropost_id: @micropost.id).count == 1
       Like.where(user_id: current_user.id, micropost_id: @micropost.id).update(is_like: true)
     else
@@ -35,7 +31,6 @@ class LikesController < ApplicationController
   end
 
   def unlike
-    @micropost = Micropost.find_by(id: params[:id])
     if Like.where(user_id: current_user.id, micropost_id: @micropost.id).count == 1
       Like.where(user_id: current_user.id, micropost_id: @micropost.id).update(is_like: false)
     else
@@ -50,4 +45,8 @@ class LikesController < ApplicationController
     
   end
 
+  private 
+    def set_micropost
+      @micropost = Micropost.find_by(id: params[:id])
+    end
 end

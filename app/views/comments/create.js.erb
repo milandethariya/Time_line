@@ -1,6 +1,8 @@
 $("#micropostcomment-<%= @micropost.id %>").html("<%= j render(partial: 'comments/commentcount', locals: {micropost: @micropost})%>");
 $("#commentform-<%= @micropost.id %>").html("<%= j render(partial: 'comments/commentform', locals: {micropost: @micropost})%>");
-/*$("#list-comment-<%= @micropost.id %>:not(:empty)").html("<%= j render(partial: 'comments/commentshow')%>");*/
-if ($('#list-comment-<%= @micropost.id %>').val() != ''){
-	$('#list-comment-<%= @micropost.id %>').html("<%= j render(partial: 'comments/commentshow')%>")
-}
+$("#list-comment-<%= @micropost.id %>:not(:empty)").html("<%= j render(partial: 'comments/commentshow')%>");
+/*if ($('#list-comment-<%= @micropost.id %>').html() != "\n      \n    "){
+	$('#list-like-<%= @micropost.id %>').html("");
+	$("#list-unlike-<%= @micropost.id %>").html("");
+	$('#list-comment-<%= @micropost.id %>').html("<%= j render(partial: 'comments/commentshow')%>");
+}*/

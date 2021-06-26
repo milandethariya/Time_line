@@ -1,5 +1,7 @@
 $("#micropostLike-<%= @micropost.id %>").html("<%= j render(partial: 'likes/likeForm',locals: {micropost: @micropost});%>");
-/*$("#list-unlike-<%= @micropost.id %>:not(:empty)").html("<%= j render(partial: 'likes/unlikeshow')%>");*/
-if ($('#list-unlike-<%= @micropost.id %>').val() != ''){
-	$('#list-unlike-<%= @micropost.id %>').html("<%= j render(partial: 'likes/unlikeshow')%>")
-}
+$("#list-unlike-<%= @micropost.id %>:not(:empty)").html("<%= j render(partial: 'likes/unlikeshow')%>");
+/*if ($('#list-unlike-<%= @micropost.id %>').html() != "\n       \n    " || $('#list-unlike-<%= @micropost.id %>').html() != ""){
+	$('#list-comment-<%= @micropost.id %>').html("");
+	$('#list-like-<%= @micropost.id %>').html("");
+	$('#list-unlike-<%= @micropost.id %>').html("<%= j render(partial: 'likes/unlikeshow')%>");
+}*/
