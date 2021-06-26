@@ -43,4 +43,8 @@ class User < ApplicationRecord
     friends.push(self.id)
     #microposts = Micropost.where(user_id: friends)
   end
+
+  def check_like(micropost)
+  	Like.where(user_id: self.id, micropost_id: micropost.id).count == 1
+	end
 end

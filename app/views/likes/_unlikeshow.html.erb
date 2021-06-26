@@ -1,11 +1,11 @@
 <h3 class="text-center">Unlikes By</h3>
-<% if @users.present? %>
+<% if users.present? %>
   <table>
     <tr>
       <th>Profile</th>
       <th>Name</th>
     </tr>
-    <% @users.each do |user| %>
+    <% users.each do |user| %>
     <tr>
       <td><%= image_tag user.profile_image.url, style: 'height:1.5vw;width:3vw;' if  user.profile_image?%></td>
       <td><%= user.name %></td>

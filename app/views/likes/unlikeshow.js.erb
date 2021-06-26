@@ -1,2 +1,2 @@
 $(".clear").html("");
-$("#list-unlike-<%= @micropost.id %>").html("<%= j render(partial: 'likes/unlikeshow')%>");
+$("#list-unlike-<%= @micropost.id %>").html("<%= j render(partial: 'likes/unlikeshow',locals: {users: @unlikeusers})%>");
