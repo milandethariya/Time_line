@@ -13,7 +13,8 @@
         <% if current_user.is_admin? %> 
           <%= link_to 'Delete', micropost_path(micropost.id), method: "delete",remote: true,class: "text-decoration-none", data:{ confirm: "Are you sure you want to delete the micropost?"}%>
         <% else %>
-          <% if micropost.user.id == current_user.id %>
+          <!-- refactore this code -->
+          <% if micropost.find_user(current_user) %>
             <%= link_to 'Delete', micropost_path(micropost.id), method: "delete",remote: true,class: "text-decoration-none", data:{ confirm: "Are you sure you want to delete the micropost?"}%>
           <% end %>
         <% end %>

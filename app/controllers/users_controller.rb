@@ -11,11 +11,12 @@ class UsersController < ApplicationController
 
   def timeline
     @micropost = current_user.microposts.build
-    friends =  current_user.senders.where(status: "accept").pluck(:receiver_id)
-    friends += current_user.receivers.where(status: "accept").pluck(:sender_id)
-    friends.push(current_user.id)
-    @pagy, @microposts = pagy(Micropost.where(user_id: friends))
-    #@pagy, @records = pagy(Product.some_scope)
+    #friends =  current_user.senders.where(status: "accept").pluck(:receiver_id)
+    #friends += current_user.receivers.where(status: "accept").pluck(:sender_id)
+    #friends.push(current_user.id)
+    #@microposts = Micropost.where(user_id: friends)
+    #@pagy, @microposts = pagy(Micropost.where(user_id: friends))
+    @pagy, @microposts = pagy(current_user.friend_microposts)
     @comment = Comment.new
   end
 

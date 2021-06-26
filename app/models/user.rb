@@ -18,14 +18,14 @@ class User < ApplicationRecord
 	validate :cover_size
 
 	def profile_size
-    if profile_image.size > 5.megabytes
+    if profile_image.size > 2.megabytes
       errors.add(:picture, "profile_image should be less than 2MB")
     end
   end
 
   def cover_size
-  	if cover_image.size > 2.megabytes
-  		errors.add(:picture, "cover_image should be less than 2MB")
+  	if cover_image.size > 5.megabytes
+  		errors.add(:picture, "cover_image should be less than 5MB")
 		end
 	end
 
@@ -37,4 +37,10 @@ class User < ApplicationRecord
 		Friendship.find_by(sender_id: [user.id,self.id], receiver_id: [user.id,self.id])
 	end
 
+	def friend_microposts
+    friends =  self.senders.where(status: "accept").pluck(:receiver_id)
+    friends += self.receivers.where(status: "accept").pluck(:sender_id)
+    friends.push(self.id)
+    microposts = Micropost.where(user_id: friends)
+  end
 end

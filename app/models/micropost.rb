@@ -8,8 +8,12 @@ class Micropost < ApplicationRecord
   validate :micropost_size
 
   def micropost_size
-    if micropost_image.size > 1.megabytes
+    if micropost_image.size > 2.megabytes
       errors.add(:picture, "micropost_image should be less than 2MB")
     end
+  end
+
+  def find_user(user)
+    self.user == user
   end
 end

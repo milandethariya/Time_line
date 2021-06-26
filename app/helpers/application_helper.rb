@@ -22,6 +22,7 @@ module ApplicationHelper
   end
 
   def log_in?
+    #if current_user.nil?
     unless !current_user.nil?
       redirect_to root_path
     end
